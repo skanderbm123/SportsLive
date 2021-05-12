@@ -4,13 +4,13 @@ import Title from './Title'
 import Subtitle from './Subtitle'
 
 
-const BlockCard = ({style , imageStyle , item}) => {
+const FlatCard = ({ item}) => {
     const {thumbnail, title , desc} = item;
     return (
-        <View style={[styles.container,style]}>
+        <View style={styles.container}>
             <Image
                  source={{uri : thumbnail }}
-                 style={[styles.image ,imageStyle]}
+                 style={styles.image}
                 />
             <View style={styles.contentContainer}>
                 <Title>{title}</Title>
@@ -22,22 +22,24 @@ const BlockCard = ({style , imageStyle , item}) => {
 }
 
 const styles = StyleSheet.create({
-    container :{ 
-        width: '100%',
-        height: 300,
+    container: {
+        height: 80,
+        backgroundColor : 'white',
+        alignItems: 'center',
+        flexDirection: 'row',
         borderRadius: 8,
         overflow: 'hidden',
-        backgroundColor: '#fff'
+        marginBottom: 10
     },
-    image: {
-        width: '100%',
-        height: 200
+    image:{
+        height: '100%',
+        flex: 0.35,
     },
     contentContainer: {
-        padding: 5 ,
-
+        flex: 0.65,
+        paddingHorizontal: 5
     }
 
 })
 
-export default BlockCard;
+export default FlatCard;

@@ -1,15 +1,20 @@
-import React from 'react'
-import { StyleSheet, Text, View , Image } from 'react-native'
-import BlockCard from './BlockCard'
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import BlockCard from './BlockCard';
 
-const FeaturedNews = ({}) => {
-    return <BlockCard style={{marginVertical : 15}}/>;
+const FeaturedNews = ({ item }) => {
+  return (
+    <BlockCard
+      item={item}
+      style={{ marginVertical: 15 }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
     container :{ 
         width: '100%',
-        height: 300,
+        height: 200,
         borderRadius: 8,
         overflow: 'hidden',
         backgroundColor: '#fff'
