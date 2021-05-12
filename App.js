@@ -1,33 +1,49 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import newsApi from './app/api/newApi'
+
 import SearchBar from './app/components/SearchBar';
 import Screen from './app/components/Screen';
 import FeaturedNews from './app/components/FeaturedNews'
 import BreakingNews from './app/components/BreakingNews'
-import TechNews from './app/components/TechNews'
-import FlatCard from './app/components/FlatCard'
+import PoliticalNews from './app/components/PoliticalNews'
 
-import data from './fakeData'
-import PoliticalNews from './app/components/PoliticalNews';
 
 export default function App() {
-  const breakingNews = data.filter(item => item.category === 'breaking-news')
-  const techNews = data.filter(item => item.category === 'tech')
-  const politicalNews = data.filter(item => item.category === 'political')
+  const [featuredNews, setFeaturedNews] = useState({});
+  const [breakingNews, setBreakingNews] = useState([]);
+  const [politicalNews, setPoliticalNews] = useState([]);
 
-  return <Screen>
-    <SearchBar />
-     <FeaturedNews 
-        item = {{ 
-        id: '7',
-        title: 'This is the title no seven.',
-        desc:
-        'Desc is the short form of description and this format is the actual same as our real database.',
-        thumbnail: 'http://lorempixel.com/400/200/',
-            }} />
-      <TechNews data ={techNews} />
-      <BreakingNews data ={breakingNews} />
-   
-      <PoliticalNews data={politicalNews}/>
-  </Screen>;
+  const filterFeatured = (data) => {
+    console.log([...data].filter(item => item.featured ==='on').reverse()[0])
+    return [...data].filter(item => item.featured ==='on').reverse()[0];
+  }
+  const filterByCategory = (data,category) => {
+    return [...data].filter(item => item.category === category);
+  }
+
+  const filterMultipleNews = async() =>{
+    const allNews = await newsApi.getAll();
+
+    setFeaturedNews(filterFeatured(allNews));
+    setBreakingNews(filterByCategory(allNews,'breaking-news'));
+    setPoliticalNews(filterByCategory(allNews,'political'));
+
+  }
+
+
+  useEffect(() => {
+    filterMultipleNews();
+  },[]);
+
+
+
+  return (
+    <Screen>
+      <SearchBar/>
+       
+    </Screen>
+  
+  )
+
 }
 
